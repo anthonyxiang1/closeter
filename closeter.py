@@ -31,7 +31,10 @@ with forecast(APIKEY, 40.9257, -73.1409) as sbu:
     print("Precipitation intensity: " + (str)(sbu.daily[0].precipIntensity))
 
     hourprecip = [hour.precipProbability for hour in sbu.hourly[:16]]
-    print ("precip probability next few hrs: " + (str)(hourprecip))
+    time = [(hour.time/3600 -5)%12 + 1 for hour in sbu.hourly[:16]]
+    print ("precip probability next few hrs: ")
+    for i in range(len(hourprecip)):
+        print((str)((int)(time[i])) + ":00 : " + (str)(hourprecip[i]))
 
             
 print('----------------------------------')
