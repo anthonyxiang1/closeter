@@ -1,5 +1,6 @@
 # closeter
-Creates an outfit based on two inputs - style and shoe. Uses DarkSky API to make decisions based on weather and reads clothes from a CSV file.
+Creates an outfit based on three inputs - style, season, and shoe. Uses DarkSky API to make decisions based on weather and reads clothes from a CSV file. Automates some decisions based on the weather - specifically temperature and precipitation probability.
+
 Based on my experience and inability to decide what to wear in the morning, leading to decision fatigue and wasted time in the mornings.
 
 # Usage
