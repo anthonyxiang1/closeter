@@ -5,11 +5,10 @@
 
 #things I want to add to this:
 #use tkinter GUI
-#put shorts into csv later, spring and winter distinction
+#put shorts into csv later
 #account for colors (no groufits)
 #rating system - each combination gets a rating, saves it
 #accounts for laundry and repeated clothing (maybe a reset button after doing laundry)
-#a gym input - clothes to change into
 
 import random
 import math
@@ -44,66 +43,84 @@ shoes = ['chucks', 'white leather', 'beaters', 'alphabounce', 'timbs','boots']
 if (sbu.daily[0].precipIntensity > 0.01):
     shoes = ['beaters', 'timbs']
 
-#season and temperature-based decisions for jacket
+#season and temperature-based decisions
 seasons = ['winter', 'spring']
-seasonChoice = eval(input("What season is it?" + (str)(seasons)))
 
-if (seasonChoice == 0):
-    jackets = ['olive', 'none']
-else:
-    jackets = ['navy', 'none']
 
-if ((sbu.daily[0].temperatureMax + sbu.daily[0].temperatureMin)/2 < 50 and seasonChoice == 0):
-    jacketChoice=0
-else:
-    jacketChoice = random.randint(0,len(jackets)-1)
 
 #the different styles that I dress in
 styles = ("ath", "casual", "bizcasual")
 
-ath = []
-casual = []
-bizcasual = []
+athWinter = []
+casualWinter = []
+bizcasualWinter = []
+athSpring = []
+casualSpring = []
+bizcasualSpring = []
 
-#makes athleisure, casual, and bizcasual category lists
+#makes athleisure, casual, and bizcasual category lists, split again by season
 with open('closeter.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
     for i in readCSV:
-        if(i[3] == 'ath' or i[4] == 'ath'):
-            ath.append(i)
-        if(i[3] == 'casual' or i[4] == 'casual'):
-            casual.append(i)
-        if(i[3] == 'bizcasual' or i[4] == 'bizcasual'):
-            bizcasual.append(i)
+        if((i[3] == 'ath' or i[4] == 'ath') and (i[5] == 'winter' or i[6] == 'winter')):
+            athWinter.append(i)
+        if((i[3] == 'casual' or i[4] == 'casual') and (i[5] == 'winter' or i[6] == 'winter')):
+            casualWinter.append(i)
+        if((i[3] == 'bizcasual' or i[4] == 'bizcasual') and (i[5] == 'winter' or i[6] == 'winter')):
+            bizcasualWinter.append(i)
+        if((i[3] == 'ath' or i[4] == 'ath') and (i[5] == 'spring' or i[6] == 'spring')):
+            athSpring.append(i)
+        if((i[3] == 'casual' or i[4] == 'casual') and (i[5] == 'spring' or i[6] == 'spring')):
+            casualSpring.append(i)
+        if((i[3] == 'bizcasual' or i[4] == 'bizcasual') and (i[5] == 'spring' or i[6] == 'spring')):
+            bizcasualSpring.append(i)
 
 #I like to start my outfits from the bottom up, choosing shoes first based on weather
 #style depending on the weather and occasion
 shoeChoice = eval(input("Which shoe to wear today?" + (str)(shoes)))
 styleChoice = eval(input("Which style for today?" + (str)(styles)))
+seasonChoice = eval(input("Which season is it?" + (str)(seasons)))
 
-if (styleChoice == 0):
-    li = ath
-elif (styleChoice == 1):
-    li = casual
-elif (styleChoice == 2):
-    li = bizcasual
+if (styleChoice == 0 and seasonChoice == 0):
+    li = athWinter
+elif (styleChoice == 1 and seasonChoice == 0):
+    li = casualWinter
+elif (styleChoice == 2 and seasonChoice == 0):
+    li = bizcasualWinter
+elif (styleChoice == 0 and seasonChoice == 1):
+    li = athSpring
+elif (styleChoice == 1 and seasonChoice == 1):
+    li = casualSpring
+elif (styleChoice == 2 and seasonChoice == 1):
+    li = bizcasualSpring
 
 def outfitMaker(li):
+    if (seasonChoice == 1):
+        jacket = ['None']
+    else:
+        jacket = ['None']
     layer2 = []
     shirt = []
     pants = []
     outfitList = []
     
     for i in range(len(li)):
+        if (li[i][1] == 'jacket'):
+            jacket.append(li[i][0])
         if (li[i][1] == 'layer2'):
             layer2.append(li[i][0])
         if (li[i][1] == 'shirt'):
             shirt.append(li[i][0])
         if (li[i][1] == 'pants'):
             pants.append(li[i][0])
+    
+    outfitList.append("Jacket: " + jacket[random.randint(0,len(jacket)-1)])
+    
+    if ((sbu.daily[0].temperatureMax + sbu.daily[0].temperatureMin)/2 < 70):
+        outfitList.append("Outer: " + layer2[random.randint(0,len(layer2)-1)])
+    else:
+        outfitList.append("Outer: None")
 
-    outfitList.append("Jacket: " + jackets[jacketChoice])
-    outfitList.append("Outer: " + layer2[random.randint(0,len(layer2)-1)])
     outfitList.append("Shirt: " + shirt[random.randint(0,len(shirt)-1)])
     outfitList.append("Pants: " + pants[random.randint(0,len(pants)-1)])
     outfitList.append("Shoes: " + shoes[shoeChoice])
@@ -114,3 +131,14 @@ def outfitMaker(li):
 
 #run outfitMaker
 outfitMaker(li)
+
+
+
+
+
+
+
+
+
+
+
