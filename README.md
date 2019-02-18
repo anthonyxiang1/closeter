@@ -6,6 +6,6 @@ Based on my experience and inability to decide what to wear in the morning, lead
 # Usage
 Using Notepad, input clothes that you want to wear in the following format:
 
-name,type,color,style1,style2
+name,type,color,style1,style2,weather1,weather2
 
 The name is not important, as long as you know which piece you are referring to.
