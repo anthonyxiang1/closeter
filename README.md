@@ -4,7 +4,7 @@ Creates an outfit based on three inputs - style, season, and shoe. Uses DarkSky 
 Based on my experience and inability to decide what to wear in the morning, leading to decision fatigue and wasted time in the mornings.
 
 # Usage
-Using Notepad, input clothes that you want to wear in the following format:
+Using Notepad or a spreadsheet, input clothes that you want to wear in the following format:
 
 name,type,color,style1,style2,weather1,weather2
 
