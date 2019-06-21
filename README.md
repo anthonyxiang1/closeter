@@ -8,4 +8,4 @@ Using Notepad, input clothes that you want to wear in the following format:
 
 name,type,color,style1,style2,weather1,weather2
 
-The name is not important, as long as you know which clothing piece you are referring to.
+name does not have to be specific, as long as you know which clothing piece you are referring to.
