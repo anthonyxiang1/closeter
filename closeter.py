@@ -20,32 +20,28 @@ import matplotlib.pyplot as plt
 #darksky API
 APIKEY = 'f66b5c93b776e8e4eae533967cba301a'
 
+lat = eval(input("Enter latitude:"))
+long = eval(input("Enter longitude:"))
+
 #using local latitude and longitude, get DarkSky's summary, temperature high/low,
 #and precipitation probability for the next few hours
 weekday = date.today()
-with forecast(APIKEY, 40.9257, -73.1409) as sbu:
+with forecast(APIKEY, lat, long) as location:
     print("WEATHER SUMMARY")
-    print(sbu.hourly.summary)
-    print("Temp range: " + (str)(sbu.daily[0].temperatureMin) + " - " + (str)(sbu.daily[0].temperatureMax))
-    print("Precipitation intensity: " + (str)(sbu.daily[0].precipIntensity))
+    print(location.hourly.summary)
+    print("Temp range: " + (str)(location.daily[0].temperatureMin) + " - " + (str)(location.daily[0].temperatureMax))
+    print("Precipitation intensity: " + (str)(location.daily[0].precipIntensity))
 
-    hourprecip = [hour.precipProbability for hour in sbu.hourly[:24]]
-    time = [(hour.time/3600 -5)%12 + 1 for hour in sbu.hourly[:24]]
+    hourprecip = [hour.precipProbability for hour in location.hourly[:24]]
+    time = [(hour.time/3600 -5)%12 + 1 for hour in location.hourly[:24]]
     print ("precip probability next 24 hrs: ")
     for i in range(len(hourprecip)):
         print((str)((int)(time[i])) + ":00 : " + (str)(hourprecip[i]))
             
 print('----------------------------------')
 
-#my shoes
-shoes = ['chucks', 'white leather', 'beaters', 'alphabounce', 'timbs','boots']
-
-if (sbu.daily[0].precipIntensity > 0.01):
-    shoes = ['beaters', 'timbs']
-
 #season and temperature-based decisions
-seasons = ['winter', 'spring']
-
+seasons = ['fall/winter', 'spring/summer']
 
 
 #the different styles that I dress in
@@ -58,7 +54,10 @@ athSpring = []
 casualSpring = []
 bizcasualSpring = []
 
-#makes athleisure, casual, and bizcasual category lists, split again by season
+#my shoes
+shoes = []
+
+#makes athleisure, casual, and bizcasual category lists, split again by season - 
 with open('closeter.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
     for i in readCSV:
@@ -74,6 +73,11 @@ with open('closeter.csv') as csvfile:
             casualSpring.append(i)
         if((i[3] == 'bizcasual' or i[4] == 'bizcasual') and (i[5] == 'spring' or i[6] == 'spring')):
             bizcasualSpring.append(i)
+        if(i[1] == 'shoes' and location.daily[0].precipIntensity > 0.01):
+            if(i[5] == 'all'):
+                shoes.append(i[0])
+        elif(i[1] == 'shoes'):
+            shoes.append(i[0])
 
 #I like to start my outfits from the bottom up, choosing shoes first based on weather
 #style depending on the weather and occasion
@@ -115,12 +119,14 @@ def outfitMaker(li):
             pants.append(li[i][0])
     
     outfitList.append("Jacket: " + jacket[random.randint(0,len(jacket)-1)])
-    
-    if ((sbu.daily[0].temperatureMax + sbu.daily[0].temperatureMin)/2 < 70):
+
+    #add a jacket if the avg temperature is under 70
+    if ((location.daily[0].temperatureMax + location.daily[0].temperatureMin)/2 < 70):
         outfitList.append("Outer: " + layer2[random.randint(0,len(layer2)-1)])
     else:
         outfitList.append("Outer: None")
 
+    #randomly generated outfit
     outfitList.append("Shirt: " + shirt[random.randint(0,len(shirt)-1)])
     outfitList.append("Pants: " + pants[random.randint(0,len(pants)-1)])
     outfitList.append("Shoes: " + shoes[shoeChoice])
