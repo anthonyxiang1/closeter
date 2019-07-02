@@ -1,5 +1,6 @@
 # Closeter - outfit creating app
 
+A outfit selecting app given a csv file of the user's wardrobe - includes decision automation using weather based features through DarkSky API.
 
 ## Inspiration/About
 For my personal inability to decide what to wear, to combat decision fatigue and wasted time during the morning. Creates an outfit based on three inputs - style, season, and shoe. Uses DarkSky API to make decisions based on weather and reads clothes from a CSV file. Automates certain decisions based on the weather - specifically temperature and precipitation probability.
