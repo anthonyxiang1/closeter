@@ -12,3 +12,5 @@ name does not have to be specific, as long as you know which clothing piece you 
 
 For shoes:
 weather1 has inputs: all | no rain
+
+See the csv file attached as an example.
